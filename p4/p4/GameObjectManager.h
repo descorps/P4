@@ -12,7 +12,6 @@ public:
 	ObjetVisible* get(std::string name) const;
 
 	void drawAll(sf::RenderWindow& renderWindow);
-
 private:
 	std::map<std::string, ObjetVisible*> _gameObjects;
 

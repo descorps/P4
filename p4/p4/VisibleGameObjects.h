@@ -14,7 +14,6 @@ public:
 	void load(string filename);
 	void setPosition(float x, float y);
 	void move(float x, float y);
-	virtual void animation(int tailleSprite, int top, int width, int height) = 0;
 private:
 protected:
 	Sprite sprite;

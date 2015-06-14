@@ -8,6 +8,7 @@ class Game
 
 public:
 	static void Start();
+	const static GameObjectManager& getGameObjectManager();
 
 private:
 	static bool IsExiting();

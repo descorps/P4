@@ -3,6 +3,12 @@
 #include "MainMenu.h"
 #include "SplashScreen.h"
 
+const GameObjectManager& Game::getGameObjectManager()
+{
+	return Game::_gameObjectManager;
+}
+
+
 void Game::Start(void)
 {
 	if (_gameState != Uninitialized)
@@ -13,7 +19,7 @@ void Game::Start(void)
 
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteF.png");
-	cycliste->setPosition((1024 / 2) - 45, 700);
+	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 100);
 	_gameObjectManager.add("Cycliste", cycliste);
 
 	Fleche *fleche = new Fleche();
@@ -25,7 +31,8 @@ void Game::Start(void)
 
 	while (!IsExiting())
 	{
-		_gameObjectManager.get("Cycliste")->animation(88, 264, 88, 88);
+		Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
+		cycliste->animation(88, 264, 88, 88);
 		GameLoop();
 	}
 
