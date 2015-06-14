@@ -8,7 +8,7 @@ void Game::Start(void)
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH, 32), "Pang!");
+	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 
 	cycliste.load("images/bike.png");
 	cycliste.setPosition((1024 / 2) - 45, 700);
@@ -46,7 +46,7 @@ void Game::GameLoop()
 		}
 		case Game::ShowingSplash:
 		{
-		    ShowSplashScreen();
+			ShowSplashScreen();
 			break;
 		}
 		case Game::Playing:
@@ -64,7 +64,23 @@ void Game::GameLoop()
 				{
 					if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
 				}
+
+				if (currentEvent.type == sf::Event::KeyPressed)
+				{
+
+
+					cout << "bouton presse" << endl;
+
+					if (currentEvent.key.code == sf::Keyboard::Key::Left)
+						cycliste.mouvement(gauche);
+
+					if (currentEvent.key.code == sf::Keyboard::Key::Right)
+						cycliste.mouvement(droite);
+
+				}
 			}
+
+
 
 			break;
 		}

@@ -25,11 +25,13 @@ class Cycliste : public ObjetVisible
 {
 public:
 	Cycliste(int orientation = 0, int position = 0);
+	void mouvement(Direction d);
 private:
 	int orientation;
 	int position;
 
 };
+
 
 class Item : public ObjetVisible
 {

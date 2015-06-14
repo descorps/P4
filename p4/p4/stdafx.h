@@ -19,5 +19,5 @@
 #include <iostream>
 #include <cassert>
 
-#define WINDOW_HEIGHT 1024
-#define WINDOW_WIDTH 768
+#define WINDOW_HEIGHT 768
+#define WINDOW_WIDTH 1024

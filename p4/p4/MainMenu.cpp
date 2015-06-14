@@ -60,7 +60,7 @@ MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
 {
 	sf::Event menuEvent;
 
-	while (true)
+	while (1)
 	{
 
 		while (window.pollEvent(menuEvent))

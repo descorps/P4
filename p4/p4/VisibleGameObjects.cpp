@@ -6,8 +6,7 @@ ObjetVisible::ObjetVisible()
 	estCharge = false;
 }
 
-/* Fonctions draw et load qui est la même pour tous les objets qui héritent de ObjetVisible */
-
+/* Objet visible */
 void ObjetVisible::load(string nomFichier)
 {
 	if (texture.loadFromFile(nomFichier) == false)
@@ -38,18 +37,32 @@ void ObjetVisible::setPosition(float x, float y)
 	}
 }
 
+/* Cycliste */
 Cycliste::Cycliste(int orientation, int position) :
 	orientation(orientation),
 	position(position)
 {
 }
 
+void Cycliste::mouvement(Direction d) {
+	switch (d)
+	{
+	case gauche:
+		sprite.move(- WINDOW_WIDTH / 5, 0);
+		break;
+	case droite:
+		sprite.move(WINDOW_WIDTH / 5, 0);
+		break;
+
+	}
+}
+
+/* Objets qui défilents */
 Fleche::Fleche(int distance, Direction direction) :
 	distance(distance),
 	direction(direction)
 {
 }
-
 
 Obstacle::Obstacle(int distance, TypeObstacle type) :
 	distance(distance),
@@ -57,6 +70,7 @@ Obstacle::Obstacle(int distance, TypeObstacle type) :
 {
 }
 
+/* Jauge */
 Jauge::Jauge(int niveau, int tolerance) :
 	niveau(niveau),
 	tolerance(tolerance)
