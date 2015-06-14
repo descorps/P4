@@ -1,0 +1,6 @@
+*.tlog
+*.opensdf
+*.sdf
+*.idb
+*.vcxproj
+*.filters
