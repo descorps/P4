@@ -48,13 +48,21 @@ void Cycliste::mouvement(Direction d) {
 	switch (d)
 	{
 	case gauche:
-		sprite.move(- WINDOW_WIDTH / 5, 0);
+		if (sprite.getPosition().x - (WINDOW_WIDTH / 5) > 0)
+			sprite.move(- WINDOW_WIDTH / 5, 0);
 		break;
 	case droite:
+		if (sprite.getPosition().x + (WINDOW_WIDTH / 5) < WINDOW_WIDTH)
 		sprite.move(WINDOW_WIDTH / 5, 0);
 		break;
 
 	}
+}
+
+void Cycliste::animation(int tailleSprite, int top, int width, int height) {
+	static int compteurAnim = 0;
+	compteurAnim = (compteurAnim + 1) % 4;
+	sprite.setTextureRect(IntRect(compteurAnim*tailleSprite, top, width, height));
 }
 
 /* Objets qui défilents */

@@ -10,13 +10,14 @@ void Game::Start(void)
 
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
-	cycliste.load("images/bike.png");
-	cycliste.setPosition((1024 / 2) - 45, 700);
+	cycliste.load("images/cyclisteF.png");
+	cycliste.setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 95);
 
 	_gameState = Game::ShowingSplash;
 
 	while (!IsExiting())
 	{
+		cycliste.animation(88, 264, 88, 88);
 		GameLoop();
 	}
 
@@ -33,6 +34,9 @@ bool Game::IsExiting()
 
 void Game::GameLoop()
 {
+	sf::Event currentEvent;
+	_mainWindow.pollEvent(currentEvent);
+
 	switch (_gameState)
 	{
 	case Game::ShowingMenu:
@@ -47,37 +51,35 @@ void Game::GameLoop()
 	}
 	case Game::Playing:
 	{
-		sf::Event currentEvent;
-		while (_mainWindow.pollEvent(currentEvent))
+
+		_mainWindow.clear(sf::Color(0, 0, 0));
+
+
+		cycliste.draw(_mainWindow);
+		_mainWindow.display();
+
+		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+
+		if (currentEvent.type == sf::Event::KeyPressed)
 		{
-			_mainWindow.clear(sf::Color(0, 0, 0));
-			cycliste.draw(_mainWindow);
-			_mainWindow.display();
-
-			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
-
-			if (currentEvent.type == sf::Event::KeyPressed)
-			{
-				if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
-			}
-
-			if (currentEvent.type == sf::Event::KeyPressed)
-			{
-
-
-				cout << "bouton presse" << endl;
-
-				if (currentEvent.key.code == sf::Keyboard::Key::Left)
-					cycliste.mouvement(gauche);
-
-				if (currentEvent.key.code == sf::Keyboard::Key::Right)
-					cycliste.mouvement(droite);
-
-			}
+			if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
 		}
 
+		if (currentEvent.type == sf::Event::KeyPressed)
+		{
 
 
+			cout << "bouton presse" << endl;
+
+			if (currentEvent.key.code == sf::Keyboard::Key::Left)
+				cycliste.mouvement(gauche);
+
+			if (currentEvent.key.code == sf::Keyboard::Key::Right)
+				cycliste.mouvement(droite);
+
+		}
+
+		
 		break;
 	}
 	}

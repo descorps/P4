@@ -26,10 +26,10 @@ class Cycliste : public ObjetVisible
 public:
 	Cycliste(int orientation = 0, int position = 0);
 	void mouvement(Direction d);
+	void animation(int tailleSprite, int top, int width, int height);
 private:
 	int orientation;
 	int position;
-
 };
 
 
