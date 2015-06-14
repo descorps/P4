@@ -13,6 +13,7 @@ public:
 	void draw(RenderWindow & window) const;
 	void load(string filename);
 	void setPosition(float x, float y);
+	void move(float x, float y);
 private:
 protected:
 	Sprite sprite;
@@ -24,11 +25,9 @@ protected:
 class Cycliste : public ObjetVisible
 {
 public:
-	Cycliste(int orientation = 0, int position = 0);
-	void mouvement(Direction d);
+	Cycliste(int orientation = 0);
 private:
 	int orientation;
-	int position;
 
 };
 
