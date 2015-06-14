@@ -9,7 +9,7 @@ void Game::Start(void)
 		return;
 
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
-
+	_mainWindow.setFramerateLimit(60);
 	cycliste.load("images/bike.png");
 	cycliste.setPosition((1024 / 2) - 45, 700);
 
@@ -33,58 +33,53 @@ bool Game::IsExiting()
 
 void Game::GameLoop()
 {
-	sf::Event currentEvent;
-	while (_mainWindow.pollEvent(currentEvent))
+	switch (_gameState)
 	{
+	case Game::ShowingMenu:
+	{
+		ShowMenu();
+		break;
+	}
+	case Game::ShowingSplash:
+	{
+		ShowSplashScreen();
+		break;
+	}
+	case Game::Playing:
+	{
+		sf::Event currentEvent;
+		while (_mainWindow.pollEvent(currentEvent))
+		{
+			_mainWindow.clear(sf::Color(0, 0, 0));
+			cycliste.draw(_mainWindow);
+			_mainWindow.display();
 
-		switch (_gameState)
-		{
-		case Game::ShowingMenu:
-		{
-			ShowMenu();
-			break;
-		}
-		case Game::ShowingSplash:
-		{
-			ShowSplashScreen();
-			break;
-		}
-		case Game::Playing:
-		{
-			sf::Event currentEvent;
-			while (_mainWindow.pollEvent(currentEvent))
+			if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+
+			if (currentEvent.type == sf::Event::KeyPressed)
 			{
-				_mainWindow.clear(sf::Color(0, 0, 0));
-				cycliste.draw(_mainWindow);
-				_mainWindow.display();
-
-				if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
-
-				if (currentEvent.type == sf::Event::KeyPressed)
-				{
-					if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
-				}
-
-				if (currentEvent.type == sf::Event::KeyPressed)
-				{
-
-
-					cout << "bouton presse" << endl;
-
-					if (currentEvent.key.code == sf::Keyboard::Key::Left)
-						cycliste.mouvement(gauche);
-
-					if (currentEvent.key.code == sf::Keyboard::Key::Right)
-						cycliste.mouvement(droite);
-
-				}
+				if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
 			}
 
+			if (currentEvent.type == sf::Event::KeyPressed)
+			{
 
 
-			break;
+				cout << "bouton presse" << endl;
+
+				if (currentEvent.key.code == sf::Keyboard::Key::Left)
+					cycliste.mouvement(gauche);
+
+				if (currentEvent.key.code == sf::Keyboard::Key::Right)
+					cycliste.mouvement(droite);
+
+			}
 		}
-		}
+
+
+
+		break;
+	}
 	}
 }
 
