@@ -37,26 +37,21 @@ void ObjetVisible::setPosition(float x, float y)
 	}
 }
 
-/* Cycliste */
-Cycliste::Cycliste(int orientation, int position) :
-	orientation(orientation),
-	position(position)
+void ObjetVisible::move(float x, float y)
 {
+	if (estCharge)
+	{
+		sprite.move(x, y);
+	}
 }
 
-void Cycliste::mouvement(Direction d) {
-	switch (d)
-	{
-	case gauche:
-		if (sprite.getPosition().x - (WINDOW_WIDTH / 5) > 0)
-			sprite.move(- WINDOW_WIDTH / 5, 0);
-		break;
-	case droite:
-		if (sprite.getPosition().x + (WINDOW_WIDTH / 5) < WINDOW_WIDTH)
-		sprite.move(WINDOW_WIDTH / 5, 0);
-		break;
 
-	}
+
+
+/* Cycliste */
+Cycliste::Cycliste(int orientation) :
+	orientation(orientation)
+{
 }
 
 void Cycliste::animation(int tailleSprite, int top, int width, int height) {

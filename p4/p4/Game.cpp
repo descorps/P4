@@ -10,14 +10,22 @@ void Game::Start(void)
 
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
-	cycliste.load("images/cyclisteF.png");
-	cycliste.setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 95);
+
+	Cycliste *cycliste = new Cycliste();
+	cycliste->load("images/cyclisteF.png");
+	cycliste->setPosition((1024 / 2) - 45, 700);
+	_gameObjectManager.add("Cycliste", cycliste);
+
+	Fleche *fleche = new Fleche();
+	fleche->load("images/fleche.png");
+	fleche->setPosition((1024 / 2) - 45, 300);
+	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
 
 	while (!IsExiting())
 	{
-		cycliste.animation(88, 264, 88, 88);
+		_gameObjectManager.get("Cycliste")->animation(88, 264, 88, 88);
 		GameLoop();
 	}
 
@@ -51,11 +59,16 @@ void Game::GameLoop()
 	}
 	case Game::Playing:
 	{
-
 		_mainWindow.clear(sf::Color(0, 0, 0));
 
+		sf::Texture texture;
+		if (texture.loadFromFile("images/route.png") != true){
+			return;
+		}
+		sf::Sprite sprite(texture);
+		_mainWindow.draw(sprite);
 
-		cycliste.draw(_mainWindow);
+		_gameObjectManager.drawAll(_mainWindow);
 		_mainWindow.display();
 
 		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
@@ -67,15 +80,15 @@ void Game::GameLoop()
 
 		if (currentEvent.type == sf::Event::KeyPressed)
 		{
+			if (currentEvent.type == sf::Event::KeyPressed)
+			{
+				if (currentEvent.key.code == sf::Keyboard::Key::Left) {
+					_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5, 0);
 
-
-			cout << "bouton presse" << endl;
-
-			if (currentEvent.key.code == sf::Keyboard::Key::Left)
-				cycliste.mouvement(gauche);
-
-			if (currentEvent.key.code == sf::Keyboard::Key::Right)
-				cycliste.mouvement(droite);
+				}
+				if (currentEvent.key.code == sf::Keyboard::Key::Right)
+					_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5, 0);
+			}
 
 		}
 
@@ -109,4 +122,4 @@ void Game::ShowMenu()
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
-Cycliste Game::cycliste;
+GameObjectManager Game::_gameObjectManager;
