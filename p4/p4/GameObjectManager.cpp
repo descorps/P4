@@ -8,25 +8,25 @@ GameObjectManager::GameObjectManager()
 {
 }
 
-void GameObjectManager::add(std::string name, ObjetVisible* gameObject)
+void GameObjectManager::add(std::string name, Item* item)
 {
-	_gameObjects.insert(std::pair<std::string, ObjetVisible*>(name, gameObject));
+	_items.insert(std::pair<std::string, Item*>(name, item));
 }
 
 void GameObjectManager::remove(std::string name)
 {
-	std::map<std::string, ObjetVisible*>::iterator results = _gameObjects.find(name);
-	if (results != _gameObjects.end())
+	std::map<std::string, Item*>::iterator results = _items.find(name);
+	if (results != _items.end())
 	{
 		delete results->second;
-		_gameObjects.erase(results);
+		_items.erase(results);
 	}
 }
 
-ObjetVisible* GameObjectManager::get(std::string name) const
+Item* GameObjectManager::get(std::string name) const
 {
-	std::map<std::string, ObjetVisible*>::const_iterator results = _gameObjects.find(name);
-	if (results == _gameObjects.end())
+	std::map<std::string, Item*>::const_iterator results = _items.find(name);
+	if (results == _items.end())
 		return NULL;
 	return results->second;
 
@@ -34,24 +34,51 @@ ObjetVisible* GameObjectManager::get(std::string name) const
 
 int GameObjectManager::getObjectCount() const
 {
-	return _gameObjects.size();
+	return _items.size();
 }
 
 
 void GameObjectManager::drawAll(sf::RenderWindow& renderWindow)
 {
-	std::map<std::string, ObjetVisible*>::const_iterator itr = _gameObjects.begin();
-	while (itr != _gameObjects.end())
-	{
-		itr->second->draw(renderWindow);
-		itr++;
+	
+	for (auto &item : _items)
+		item.second->draw(renderWindow);
+	_cycliste->draw(renderWindow);
+}
+
+void GameObjectManager::collisionCycliste()
+{
+	for (auto &item : _items) {
+		if (_cycliste->getSprite().getGlobalBounds().intersects(item.second->getSprite().getGlobalBounds()))
+			;//remove(item.first);
+	}
+	
+}
+
+void GameObjectManager::generateurItems() {
+	auto route = rand() % 5 + 1;
+	Fleche *fleche = new Fleche();
+	fleche->load("images/flecheG.png");
+	fleche->setRoute(route);
+	static int i = 1;
+
+	char *nomFleche = "";
+
+	add("Fleche" + to_string(i), fleche);
+	i++;
+}
+
+void GameObjectManager::defilement() {
+	for (auto &item : _items) {
+		item.second->move(0, 8);
+		item.second->scale(1.005f, 1.005f);
 	}
 }
 
-bool GameObjectManager::collision(ObjetVisible *obj1, ObjetVisible *obj2) const
-{
-	if (obj1->getSprite().getGlobalBounds().intersects(obj2->getSprite().getGlobalBounds()))
-		return true;
-	else
-		return false;
+Cycliste* GameObjectManager::getCycliste() {
+	return _cycliste;
+}
+
+void GameObjectManager::setCycliste(Cycliste* cycliste) {
+	_cycliste = cycliste;
 }

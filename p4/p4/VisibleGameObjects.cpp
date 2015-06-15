@@ -38,7 +38,6 @@ void ObjetVisible::setPosition(float x, float y)
 }
 
 
-
 void ObjetVisible::move(float x, float y)
 {
 	if (estCharge)
@@ -50,6 +49,11 @@ void ObjetVisible::move(float x, float y)
 Sprite ObjetVisible::getSprite()
 {
 	return sprite;
+}
+
+void ObjetVisible::scale(float x, float y) {
+	if (estCharge)
+		sprite.scale(x, y);
 }
 
 /* Cycliste */
@@ -70,19 +74,19 @@ void Cycliste::setRoute(int numero) {
 		route = numero;
 		switch (numero) {
 		case 1:
-			setPosition(138.4, sprite.getPosition().y);
+			setPosition(138.4f, sprite.getPosition().y);
 			break;
 		case 2:
-			setPosition(303.2, sprite.getPosition().y);
+			setPosition(303.2f, sprite.getPosition().y);
 			break;
 		case 3:
 			setPosition(468, sprite.getPosition().y);
 			break;
 		case 4:
-			setPosition(632.8, sprite.getPosition().y);
+			setPosition(632.8f, sprite.getPosition().y);
 			break;
 		case 5:
-			setPosition(797.6, sprite.getPosition().y);
+			setPosition(797.6f, sprite.getPosition().y);
 			break;
 		}
 	}
@@ -91,6 +95,7 @@ void Cycliste::setRoute(int numero) {
 int Cycliste::getRoute() {
 	return route;
 }
+
 
 void Cycliste::moveRoute(Direction d) { 
 	switch (d) {
@@ -107,14 +112,32 @@ void Cycliste::moveRoute(Direction d) {
 
 
 /* Items qui défilents */
-void Item::scale(float x, float y) {
-	if (estCharge)
-		sprite.scale(x, y);
+
+void Item::setRoute(int numero) {
+	if ((numero <= 5) && (numero >= 1)) {
+		route = numero;
+		switch (numero) {
+		case 1:
+			setPosition(138.4f, sprite.getPosition().y);
+			break;
+		case 2:
+			setPosition(303.2f, sprite.getPosition().y);
+			break;
+		case 3:
+			setPosition(468, sprite.getPosition().y);
+			break;
+		case 4:
+			setPosition(632.8f, sprite.getPosition().y);
+			break;
+		case 5:
+			setPosition(797.6f, sprite.getPosition().y);
+			break;
+		}
+	}
 }
 
-void Item::defilement(){
-	move(0, 8);
-	scale(1.005, 1.005);
+int Item::getRoute() {
+	return route;
 }
 
 Fleche::Fleche(int distance, Direction direction) :
