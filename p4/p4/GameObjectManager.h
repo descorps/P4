@@ -10,7 +10,7 @@ public:
 	void remove(std::string name);
 	int getObjectCount() const;
 	ObjetVisible* get(std::string name) const;
-
+	bool collision(ObjetVisible *obj1, ObjetVisible *obj2) const;
 	void drawAll(sf::RenderWindow& renderWindow);
 private:
 	std::map<std::string, ObjetVisible*> _gameObjects;

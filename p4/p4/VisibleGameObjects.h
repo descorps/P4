@@ -14,6 +14,7 @@ public:
 	void load(string filename);
 	void setPosition(float x, float y);
 	void move(float x, float y);
+	Sprite getSprite();
 private:
 protected:
 	Sprite sprite;

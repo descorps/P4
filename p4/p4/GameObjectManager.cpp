@@ -47,3 +47,11 @@ void GameObjectManager::drawAll(sf::RenderWindow& renderWindow)
 		itr++;
 	}
 }
+
+bool GameObjectManager::collision(ObjetVisible *obj1, ObjetVisible *obj2) const
+{
+	if (obj1->getSprite().getGlobalBounds().intersects(obj2->getSprite().getGlobalBounds()))
+		return true;
+	else
+		return false;
+}

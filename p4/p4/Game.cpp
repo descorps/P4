@@ -33,14 +33,17 @@ void Game::Start(void)
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
-
+	auto gameObjectManager = Game::getGameObjectManager();
 	while (!IsExiting())
 	{
 		if (time.getElapsedTime().asMilliseconds() >= 50) {
-			Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
+			Cycliste* cycliste = static_cast<Cycliste*>(gameObjectManager.get("Cycliste"));
 			time.restart();
 			cycliste->animation(88, 264, 88, 88);
 			fleche->defilement();
+		}
+		if (gameObjectManager.collision(fleche,cycliste)) {
+			_gameObjectManager.remove("Fleche");
 		}
 		GameLoop();
 	}
