@@ -29,7 +29,7 @@ void Game::Start(void)
 
 	Fleche *fleche = new Fleche();
 	fleche->load("images/flecheG.png");
-	fleche->setPosition((1024 / 2) - 44, 300);
+	fleche->setPosition((1024 / 2) - 50, 0);
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
