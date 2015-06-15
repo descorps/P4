@@ -28,7 +28,7 @@ void Game::Start(void)
 	_gameObjectManager.add("Cycliste", cycliste);
 
 	Fleche *fleche = new Fleche();
-	fleche->load("images/fleche.png");
+	fleche->load("images/flecheG.png");
 	fleche->setPosition((1024 / 2) - 44, 300);
 	_gameObjectManager.add("Fleche", fleche);
 
