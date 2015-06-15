@@ -3,6 +3,8 @@
 #include "MainMenu.h"
 #include "SplashScreen.h"
 
+Clock chrono;
+
 const GameObjectManager& Game::getGameObjectManager()
 {
 	return Game::_gameObjectManager;
@@ -11,8 +13,7 @@ const GameObjectManager& Game::getGameObjectManager()
 
 void Game::Start(void)
 {
-	Clock time;
-
+	srand((unsigned int)time(NULL));
 
 	if (_gameState != Uninitialized)
 		return;
@@ -27,30 +28,13 @@ void Game::Start(void)
 	
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteM.png");
-
 	/* /!\ le sprite du cycliste doit faire 352 pixels */
 	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 200);
-	_gameObjectManager.add("Cycliste", cycliste);
-
-	Fleche *fleche = new Fleche();
-	fleche->load("images/flecheG.png");
-	fleche->setPosition((1024 / 2) - 50, 0);
-	
-	_gameObjectManager.add("Fleche", fleche);
+	_gameObjectManager.setCycliste(cycliste);
 
 	_gameState = Game::ShowingSplash;
-	auto gameObjectManager = Game::getGameObjectManager();
 	while (!IsExiting())
 	{
-		if (time.getElapsedTime().asMilliseconds() >= 50) {
-			Cycliste* cycliste = static_cast<Cycliste*>(gameObjectManager.get("Cycliste"));
-			time.restart();
-			cycliste->animation(88, 264, 88, 88);
-			fleche->defilement();
-		}
-		if (gameObjectManager.collision(fleche,cycliste)) {
-			_gameObjectManager.remove("Fleche");
-		}
 		GameLoop();
 	}
 
@@ -93,8 +77,19 @@ void Game::GameLoop()
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
 
+
 		Jauge *jauge = new Jauge();
 		jauge->remplirJauge(_mainWindow);
+
+		if (chrono.getElapsedTime().asMilliseconds() >= 50) {
+			chrono.restart();
+
+			_gameObjectManager.getCycliste()->animation(88, 264, 88, 88);
+
+			_gameObjectManager.generateurItems();
+			_gameObjectManager.defilement();
+		}
+		_gameObjectManager.collisionCycliste();
 
 		_gameObjectManager.drawAll(_mainWindow);
 		_mainWindow.display();
@@ -107,10 +102,10 @@ void Game::GameLoop()
 				ShowMenu();
 
 			if (currentEvent.key.code == sf::Keyboard::Key::Left)
-				_gameObjectManager.get("Cycliste")->moveRoute(gauche);
+				_gameObjectManager.getCycliste()->moveRoute(gauche);
 
 			if (currentEvent.key.code == sf::Keyboard::Key::Right)
-				_gameObjectManager.get("Cycliste")->moveRoute(droite);
+				_gameObjectManager.getCycliste()->moveRoute(droite);
 		}
 
 		

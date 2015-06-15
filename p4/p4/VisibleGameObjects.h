@@ -17,6 +17,7 @@ public:
 	virtual int getRoute() { return 0; };
 	virtual void moveRoute(Direction d) {};
 	void move(float x, float y);
+	void scale(float x, float y);
 	Sprite getSprite();
 private:
 protected:
@@ -42,11 +43,12 @@ private:
 
 class Item : public ObjetVisible
 {
-public:
-	void scale(float x, float y);
-	void defilement();
+public :
+	void setRoute(int numero) override;
+	int getRoute() override;
 private:
 	int distance;
+	int route;
 };
 
 class Fleche : public Item

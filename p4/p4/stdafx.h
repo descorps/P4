@@ -18,6 +18,7 @@
 #include <map>
 #include <iostream>
 #include <cassert>
+#include "time.h"
 
 #define WINDOW_HEIGHT 768
 #define WINDOW_WIDTH 1024

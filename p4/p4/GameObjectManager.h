@@ -6,14 +6,19 @@ class GameObjectManager
 public:
 	GameObjectManager();
 
-	void add(std::string name, ObjetVisible* gameObject);
+	void add(std::string name, Item* item);
 	void remove(std::string name);
 	int getObjectCount() const;
-	ObjetVisible* get(std::string name) const;
-	bool collision(ObjetVisible *obj1, ObjetVisible *obj2) const;
+	Item* get(std::string name) const;
+	void collisionCycliste();
 	void drawAll(sf::RenderWindow& renderWindow);
+	void generateurItems();
+	void defilement();
+	Cycliste* getCycliste();
+	void setCycliste(Cycliste *cycliste);
 private:
-	std::map<std::string, ObjetVisible*> _gameObjects;
+	std::map<std::string, Item*> _items;
+	Cycliste *_cycliste;
 
 	struct GameObjectDeallocator
 	{
