@@ -11,6 +11,9 @@ const GameObjectManager& Game::getGameObjectManager()
 
 void Game::Start(void)
 {
+	Clock time;
+
+
 	if (_gameState != Uninitialized)
 		return;
 
@@ -24,15 +27,19 @@ void Game::Start(void)
 
 	Fleche *fleche = new Fleche();
 	fleche->load("images/fleche.png");
-	fleche->setPosition((1024 / 2) - 45, 300);
+	fleche->setPosition((1024 / 2) - 44, 300);
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
 
 	while (!IsExiting())
 	{
-		Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
-		cycliste->animation(88, 264, 88, 88);
+
+		if (time.getElapsedTime().asMilliseconds() >= 100) {
+			Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
+			time.restart();
+			cycliste->animation(88, 264, 88, 88);
+		}
 		GameLoop();
 	}
 
@@ -82,21 +89,15 @@ void Game::GameLoop()
 
 		if (currentEvent.type == sf::Event::KeyPressed)
 		{
-			if (currentEvent.key.code == sf::Keyboard::Key::Escape) ShowMenu();
-		}
+			if (currentEvent.key.code == sf::Keyboard::Key::Escape)
+				ShowMenu();
 
-		if (currentEvent.type == sf::Event::KeyPressed)
-		{
-			if (currentEvent.type == sf::Event::KeyPressed)
-			{
-				if (currentEvent.key.code == sf::Keyboard::Key::Left) {
-					_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5, 0);
+			if (currentEvent.key.code == sf::Keyboard::Key::Left)
+				_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5, 0);
 
-				}
-				if (currentEvent.key.code == sf::Keyboard::Key::Right)
-					_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5, 0);
-			}
 
+			if (currentEvent.key.code == sf::Keyboard::Key::Right)
+				_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5, 0);
 		}
 
 		
