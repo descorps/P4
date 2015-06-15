@@ -40,7 +40,8 @@ void ObjetVisible::setPosition(float x, float y)
 void ObjetVisible::move(float x, float y)
 {
 	if (estCharge)
-		sprite.move(x, y);
+		if ((sprite.getPosition().x + x < WINDOW_WIDTH) && (sprite.getPosition().x + x > 0))
+			sprite.move(x, y);
 }
 
 
