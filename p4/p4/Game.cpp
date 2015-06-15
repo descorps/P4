@@ -24,12 +24,13 @@ void Game::Start(void)
 	cycliste->load("images/cyclisteM.png");
 
 	/* /!\ le sprite du cycliste doit faire 352 pixels */
-	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 100);
+	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 200);
 	_gameObjectManager.add("Cycliste", cycliste);
 
 	Fleche *fleche = new Fleche();
 	fleche->load("images/flecheG.png");
 	fleche->setPosition((1024 / 2) - 50, 0);
+	
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
@@ -95,10 +96,10 @@ void Game::GameLoop()
 				ShowMenu();
 
 			if (currentEvent.key.code == sf::Keyboard::Key::Left)
-				_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5 + 40, 0);
+				_gameObjectManager.get("Cycliste")->moveRoute(gauche);
 
 			if (currentEvent.key.code == sf::Keyboard::Key::Right)
-				_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5 - 40, 0);
+				_gameObjectManager.get("Cycliste")->moveRoute(droite);
 		}
 
 		

@@ -13,6 +13,9 @@ public:
 	void draw(RenderWindow & window) const;
 	void load(string filename);
 	void setPosition(float x, float y);
+	virtual void setRoute(int numero) {};
+	virtual int getRoute() { return 0; };
+	virtual void moveRoute(Direction d) {};
 	void move(float x, float y);
 private:
 protected:
@@ -25,10 +28,14 @@ protected:
 class Cycliste : public ObjetVisible
 {
 public:
-	Cycliste(int orientation = 0);
+	Cycliste(int orientation = 0, int route = 3);
 	void animation(int tailleSprite, int top, int width, int height);
+	void setRoute(int numero) override;
+	int getRoute() override;
+	void moveRoute(Direction d) override;
 private:
 	int orientation;
+	int route;
 };
 
 
