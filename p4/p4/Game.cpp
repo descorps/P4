@@ -28,8 +28,8 @@ void Game::Start(void)
 	_gameObjectManager.add("Cycliste", cycliste);
 
 	Fleche *fleche = new Fleche();
-	fleche->load("images/fleche.png");
-	fleche->setPosition((1024 / 2) - 44, 300);
+	fleche->load("images/flecheG.png");
+	fleche->setPosition((1024 / 2) - 50, 0);
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
