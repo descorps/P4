@@ -40,10 +40,11 @@ int GameObjectManager::getObjectCount() const
 
 void GameObjectManager::drawAll(sf::RenderWindow& renderWindow)
 {
-	
 	for (auto &item : _items)
 		item.second->draw(renderWindow);
 	_cycliste->draw(renderWindow);
+	_jauge->draw(renderWindow);
+
 }
 
 void GameObjectManager::collisionCycliste()
@@ -81,4 +82,14 @@ Cycliste* GameObjectManager::getCycliste() {
 
 void GameObjectManager::setCycliste(Cycliste* cycliste) {
 	_cycliste = cycliste;
+}
+
+
+Jauge* GameObjectManager::getJauge() {
+	return _jauge;
+}
+
+
+void GameObjectManager::setJauge(Jauge *jauge) {
+	_jauge = jauge;
 }

@@ -16,9 +16,12 @@ public:
 	void defilement();
 	Cycliste* getCycliste();
 	void setCycliste(Cycliste *cycliste);
+	Jauge* getJauge();
+	void setJauge(Jauge *jauge);
 private:
 	std::map<std::string, Item*> _items;
 	Cycliste *_cycliste;
+	Jauge *_jauge;
 
 	struct GameObjectDeallocator
 	{

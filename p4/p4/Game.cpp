@@ -24,7 +24,7 @@ void Game::Start(void)
 	Jauge *jauge = new Jauge();
 	jauge->load("images/jauge.png");
 	jauge->setPosition((1024 / 2) - 407, WINDOW_HEIGHT - 100);
-	_gameObjectManager.add("Jauge", jauge);
+	_gameObjectManager.setJauge(jauge);
 	
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteM.png");
