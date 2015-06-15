@@ -40,9 +40,7 @@ void ObjetVisible::setPosition(float x, float y)
 void ObjetVisible::move(float x, float y)
 {
 	if (estCharge)
-	{
 		sprite.move(x, y);
-	}
 }
 
 
@@ -60,7 +58,17 @@ void Cycliste::animation(int tailleSprite, int top, int width, int height) {
 	sprite.setTextureRect(IntRect(compteurAnim*tailleSprite, top, width, height));
 }
 
-/* Objets qui défilents */
+/* Items qui défilents */
+void Item::scale(float x, float y) {
+	if (estCharge)
+		sprite.scale(x, y);
+}
+
+void Item::defilement(){
+	move(0, 8);
+	scale(1.005, 1.005);
+}
+
 Fleche::Fleche(int distance, Direction direction) :
 	distance(distance),
 	direction(direction)

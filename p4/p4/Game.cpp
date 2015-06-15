@@ -24,7 +24,7 @@ void Game::Start(void)
 
 	Fleche *fleche = new Fleche();
 	fleche->load("images/fleche.png");
-	fleche->setPosition((1024 / 2) - 45, 300);
+	fleche->setPosition((1024 / 2) - 35, 0);
 	_gameObjectManager.add("Fleche", fleche);
 
 	_gameState = Game::ShowingSplash;
@@ -33,6 +33,7 @@ void Game::Start(void)
 	{
 		Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
 		cycliste->animation(88, 264, 88, 88);
+		fleche->defilement();
 		GameLoop();
 	}
 

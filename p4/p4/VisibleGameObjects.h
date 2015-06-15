@@ -35,6 +35,8 @@ private:
 class Item : public ObjetVisible
 {
 public:
+	void scale(float x, float y);
+	void defilement();
 private:
 	int distance;
 };
