@@ -37,6 +37,8 @@ void ObjetVisible::setPosition(float x, float y)
 	}
 }
 
+
+
 void ObjetVisible::move(float x, float y)
 {
 	if (estCharge)
@@ -51,8 +53,9 @@ Sprite ObjetVisible::getSprite()
 }
 
 /* Cycliste */
-Cycliste::Cycliste(int orientation) :
-	orientation(orientation)
+Cycliste::Cycliste(int orientation, int route) :
+	orientation(orientation),
+	route(route)
 {
 }
 
@@ -61,6 +64,47 @@ void Cycliste::animation(int tailleSprite, int top, int width, int height) {
 	compteurAnim = (compteurAnim + 1) % 4;
 	sprite.setTextureRect(IntRect(compteurAnim*tailleSprite, top, width, height));
 }
+
+void Cycliste::setRoute(int numero) {
+	if ((numero <= 5) && (numero >= 1)) {
+		route = numero;
+		switch (numero) {
+		case 1:
+			setPosition(138.4, sprite.getPosition().y);
+			break;
+		case 2:
+			setPosition(303.2, sprite.getPosition().y);
+			break;
+		case 3:
+			setPosition(468, sprite.getPosition().y);
+			break;
+		case 4:
+			setPosition(632.8, sprite.getPosition().y);
+			break;
+		case 5:
+			setPosition(797.6, sprite.getPosition().y);
+			break;
+		}
+	}
+}
+
+int Cycliste::getRoute() {
+	return route;
+}
+
+void Cycliste::moveRoute(Direction d) { 
+	switch (d) {
+	case gauche:
+		if (route != 1)
+			setRoute(getRoute() - 1);
+		break;
+	case droite:
+		if (route != 5)
+			setRoute(getRoute() + 1);
+		break;
+	}
+}
+
 
 /* Items qui défilents */
 void Item::scale(float x, float y) {
