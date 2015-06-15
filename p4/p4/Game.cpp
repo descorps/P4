@@ -90,11 +90,11 @@ void Game::GameLoop()
 			if (currentEvent.type == sf::Event::KeyPressed)
 			{
 				if (currentEvent.key.code == sf::Keyboard::Key::Left) {
-					_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5, 0);
+					_gameObjectManager.get("Cycliste")->move(-WINDOW_WIDTH / 5 + 40, 0);
 
 				}
 				if (currentEvent.key.code == sf::Keyboard::Key::Right)
-					_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5, 0);
+					_gameObjectManager.get("Cycliste")->move(WINDOW_WIDTH / 5 - 40, 0);
 			}
 
 		}
