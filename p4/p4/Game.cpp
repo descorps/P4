@@ -21,7 +21,9 @@ void Game::Start(void)
 	_mainWindow.setFramerateLimit(60);
 
 	Cycliste *cycliste = new Cycliste();
-	cycliste->load("images/cyclisteF.png");
+	cycliste->load("images/cyclisteM.png");
+
+	/* /!\ le sprite du cycliste doit faire 352 pixels */
 	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 100);
 	_gameObjectManager.add("Cycliste", cycliste);
 
@@ -35,7 +37,7 @@ void Game::Start(void)
 	while (!IsExiting())
 	{
 
-		if (time.getElapsedTime().asMilliseconds() >= 100) {
+		if (time.getElapsedTime().asMilliseconds() >= 50) {
 			Cycliste* cycliste = static_cast<Cycliste*>(Game::getGameObjectManager().get("Cycliste"));
 			time.restart();
 			cycliste->animation(88, 264, 88, 88);
