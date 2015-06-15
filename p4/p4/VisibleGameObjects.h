@@ -55,6 +55,8 @@ class Fleche : public Item
 {
 public:
 	Fleche(int distance = 0, Direction direction = gauche);
+	Direction getDirection();
+	void setDirection(Direction direction);
 private:
 	int distance;
 	Direction direction;
@@ -74,6 +76,8 @@ class Jauge : public ObjetVisible
 public:
 	Jauge(int niveau = 0, int tolerance = 45);
 	void remplirJauge(RenderWindow & window);
+	void moveNiveau(int niveau);
+	int getNiveau();
 private:
 	int niveau;
 	int tolerance;

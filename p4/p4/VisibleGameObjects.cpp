@@ -140,6 +140,13 @@ int Item::getRoute() {
 	return route;
 }
 
+Direction Fleche::getDirection() {
+	return direction;
+}
+void Fleche::setDirection(Direction direction){
+	this->direction = direction;
+}
+
 Fleche::Fleche(int distance, Direction direction) :
 	distance(distance),
 	direction(direction)
@@ -164,4 +171,12 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	rectangleVert.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 90);
 	rectangleVert.setFillColor(sf::Color(100, 250, 50));
 	window.draw(rectangleVert);
+}
+
+void Jauge::moveNiveau(int modifNiveau) {
+	this->niveau += modifNiveau;
+}
+
+int Jauge::getNiveau() {
+	return niveau;
 }

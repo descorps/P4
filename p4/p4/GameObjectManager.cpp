@@ -44,29 +44,48 @@ void GameObjectManager::drawAll(sf::RenderWindow& renderWindow)
 		item.second->draw(renderWindow);
 	_cycliste->draw(renderWindow);
 	_jauge->draw(renderWindow);
-
 }
 
 void GameObjectManager::collisionCycliste()
 {
-	for (auto &item : _items) {
-		if (_cycliste->getSprite().getGlobalBounds().intersects(item.second->getSprite().getGlobalBounds()))
-			;//remove(item.first);
+	for (auto it = _items.cbegin(); it != _items.cend();) {
+		if (_cycliste->getSprite().getGlobalBounds().intersects(it->second->getSprite().getGlobalBounds())) {
+			auto fleche = (Fleche *)(it->second);
+			if (fleche->getDirection() == gauche)
+				_jauge->moveNiveau(-1);
+			else if (fleche->getDirection() == droite)
+				_jauge->moveNiveau(1);
+			remove((it++)->first);
+		}
+		else
+			++it;
 	}
 	
 }
 
 void GameObjectManager::generateurItems() {
-	auto route = rand() % 5 + 1;
-	Fleche *fleche = new Fleche();
-	fleche->load("images/flecheG.png");
-	fleche->setRoute(route);
 	static int i = 1;
-
-	char *nomFleche = "";
-
-	add("Fleche" + to_string(i), fleche);
-	i++;
+	auto alea = rand() % 100;
+	if (alea > 75) {
+		auto route = alea % 5 + 1;
+		Fleche *fleche = new Fleche();
+		fleche->load("images/flecheG.png");
+		fleche->setRoute(route);
+		fleche->setDirection(gauche);
+		char *nomFleche = "";
+		add("FlecheG" + to_string(i), fleche);
+		i++;
+	}
+	else if (alea > 50) {
+		auto route = alea % 5 + 1;
+		Fleche *fleche = new Fleche();
+		fleche->load("images/flecheD.png");
+		fleche->setRoute(route);
+		fleche->setDirection(droite);
+		char *nomFleche = "";
+		add("FlecheD" + to_string(i), fleche);
+		i++;
+	}
 }
 
 void GameObjectManager::defilement() {
