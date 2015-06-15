@@ -71,6 +71,7 @@ class Jauge : public ObjetVisible
 {
 public:
 	Jauge(int niveau = 0, int tolerance = 45);
+	void remplirJauge(RenderWindow & window);
 private:
 	int niveau;
 	int tolerance;

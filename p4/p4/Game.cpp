@@ -20,6 +20,11 @@ void Game::Start(void)
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
 
+	Jauge *jauge = new Jauge();
+	jauge->load("images/jauge.png");
+	jauge->setPosition((1024 / 2) - 407, WINDOW_HEIGHT - 100);
+	_gameObjectManager.add("Jauge", jauge);
+	
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteM.png");
 
@@ -87,6 +92,9 @@ void Game::GameLoop()
 		}
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
+
+		Jauge *jauge = new Jauge();
+		jauge->remplirJauge(_mainWindow);
 
 		_gameObjectManager.drawAll(_mainWindow);
 		_mainWindow.display();

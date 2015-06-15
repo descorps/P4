@@ -135,3 +135,10 @@ Jauge::Jauge(int niveau, int tolerance) :
 	tolerance(tolerance)
 {
 }
+
+void Jauge::remplirJauge(RenderWindow & window) {
+	RectangleShape rectangleVert(sf::Vector2f(800, 50));
+	rectangleVert.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 90);
+	rectangleVert.setFillColor(sf::Color(100, 250, 50));
+	window.draw(rectangleVert);
+}
