@@ -164,9 +164,9 @@ Obstacle::Obstacle(int distance, TypeObstacle type) :
 
 
 /* Jauge */
-Jauge::Jauge(int niveau, int tolerance) :
+Jauge::Jauge(int niveau, int difficulte) :
 	niveau(niveau),
-	tolerance(tolerance)
+	difficulte(difficulte)
 {
 }
 
@@ -175,6 +175,26 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	rectangleVert.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 90);
 	rectangleVert.setFillColor(sf::Color(100, 250, 50));
 	window.draw(rectangleVert);
+
+	RectangleShape rectangleRouge1(sf::Vector2f(80, 50));
+	rectangleRouge1.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 85);
+	rectangleRouge1.setFillColor(sf::Color(250, 0, 0));
+	rectangleRouge1.scale(float(difficulte), 1);
+	window.draw(rectangleRouge1);
+
+	RectangleShape rectangleRouge2(sf::Vector2f(80, 50));
+	rectangleRouge2.setOrigin(80, 0);
+	rectangleRouge2.setPosition((1024 / 2) + 400, WINDOW_HEIGHT - 85);
+	rectangleRouge2.setFillColor(sf::Color(250, 0, 0));
+	rectangleRouge2.scale(float(difficulte), 1);
+	window.draw(rectangleRouge2);
+
+	this->draw(window);
+
+	RectangleShape Curseur(sf::Vector2f(10, 45));
+	Curseur.setPosition((1024 / 2) - 5 + 50 * float(niveau), WINDOW_HEIGHT - 80);
+	Curseur.setFillColor(sf::Color(190,190,190));
+	window.draw(Curseur);
 }
 
 void Jauge::moveNiveau(int modifNiveau) {

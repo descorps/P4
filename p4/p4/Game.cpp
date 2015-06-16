@@ -5,6 +5,7 @@
 #include <sstream>
 
 Clock chrono;
+Clock chrono2;
 
 const GameObjectManager& Game::getGameObjectManager()
 {
@@ -25,7 +26,7 @@ void Game::Start(void)
 	Score *score = new Score();
 	_gameObjectManager.setScore(score);
 
-	Jauge *jauge = new Jauge();
+	Jauge *jauge = new Jauge(0,1);
 	jauge->load("images/jauge.png");
 	jauge->setPosition((1024 / 2) - 407, WINDOW_HEIGHT - 100);
 	_gameObjectManager.setJauge(jauge);
@@ -82,20 +83,22 @@ void Game::GameLoop()
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
 
-
-		Jauge *jauge = new Jauge();
-		jauge->remplirJauge(_mainWindow);
-
 		if (chrono.getElapsedTime().asMilliseconds() >= 50) {
 			chrono.restart();
 
 			_gameObjectManager.getScore()->augmenterPoints(10);
 
 			_gameObjectManager.getCycliste()->animation(88, 264, 88, 88);
-
 			_gameObjectManager.generateurItems();
+
 			_gameObjectManager.defilement();
 		}
+
+		if (chrono2.getElapsedTime().asMilliseconds() >= 5000) {
+			chrono2.restart();
+			_gameObjectManager.supprFlechesHorsEcran();
+		}
+
 		_gameObjectManager.collisionCycliste();
 
 		_gameObjectManager.drawAll(_mainWindow);

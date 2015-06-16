@@ -43,7 +43,7 @@ void GameObjectManager::drawAll(sf::RenderWindow& renderWindow)
 	for (auto &item : _items)
 		item.second->draw(renderWindow);
 	_cycliste->draw(renderWindow);
-	_jauge->draw(renderWindow);
+	_jauge->remplirJauge(renderWindow);
 }
 
 void GameObjectManager::collisionCycliste()
@@ -60,7 +60,17 @@ void GameObjectManager::collisionCycliste()
 		else
 			++it;
 	}
-	
+}
+
+void GameObjectManager::supprFlechesHorsEcran()
+{
+	for (auto it = _items.cbegin(); it != _items.cend();) {
+		if (it->second->getSprite().getGlobalBounds().top > 1000) {
+			remove((it++)->first);
+		}
+		else
+			++it;
+	}
 }
 
 void GameObjectManager::generateurItems() {
