@@ -28,7 +28,7 @@ void Game::Start(void)
 
 	Jauge *jauge = new Jauge(0,1);
 	jauge->load("images/jauge.png");
-	jauge->setPosition((1024 / 2) - 407, WINDOW_HEIGHT - 100);
+	jauge->setPosition((1024 / 2) - 430, WINDOW_HEIGHT - 118);
 	_gameObjectManager.setJauge(jauge);
 	
 	Cycliste *cycliste = new Cycliste();
@@ -96,7 +96,7 @@ void Game::GameLoop()
 
 		if (chrono2.getElapsedTime().asMilliseconds() >= 5000) {
 			chrono2.restart();
-			_gameObjectManager.supprFlechesHorsEcran();
+			_gameObjectManager.supprItemsHorsEcran();
 		}
 
 		_gameObjectManager.collisionCycliste();

@@ -3,8 +3,7 @@
 using namespace std;
 using namespace sf;
 
-enum Direction { gauche, droite };
-enum TypeObstacle { mur };
+enum Direction { gauche, droite, mur };
 
 class ObjetVisible
 {
@@ -44,31 +43,15 @@ private:
 class Item : public ObjetVisible
 {
 public :
-	void setRoute(int numero) override;
-	int getRoute() override;
-private:
-	int distance;
-	int route;
-};
-
-class Fleche : public Item
-{
-public:
-	Fleche(int distance = 0, Direction direction = gauche);
+	Item(int distance = 0, Direction direction = gauche);
+	void setRoute(int numero);
+	int getRoute();
 	Direction getDirection();
 	void setDirection(Direction direction);
 private:
 	int distance;
+	int route;
 	Direction direction;
-};
-
-class Obstacle : public Item
-{
-public:
-	Obstacle(int distance = 0, TypeObstacle type = mur);
-private:
-	int distance;
-	TypeObstacle type;
 };
 
 class Jauge : public ObjetVisible

@@ -113,6 +113,12 @@ void Cycliste::moveRoute(Direction d) {
 
 
 /* Items qui défilents */
+Item::Item(int distance, Direction direction) :
+	distance(distance),
+	direction(direction)
+{
+}
+
 void Item::setRoute(int numero) {
 	if ((numero <= 5) && (numero >= 1)) {
 		route = numero;
@@ -140,26 +146,12 @@ int Item::getRoute() {
 	return route;
 }
 
-/* - Fleche */
-Direction Fleche::getDirection() {
-	return direction;
-}
-
-void Fleche::setDirection(Direction direction){
+void Item::setDirection(Direction direction){
 	this->direction = direction;
 }
 
-Fleche::Fleche(int distance, Direction direction) :
-	distance(distance),
-	direction(direction)
-{
-}
-
-/* - Obstacle */
-Obstacle::Obstacle(int distance, TypeObstacle type) :
-	distance(distance),
-	type(type)
-{
+Direction Item::getDirection() {
+	return direction;
 }
 
 

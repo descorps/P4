@@ -50,10 +50,10 @@ void GameObjectManager::collisionCycliste()
 {
 	for (auto it = _items.cbegin(); it != _items.cend();) {
 		if (_cycliste->getSprite().getGlobalBounds().intersects(it->second->getSprite().getGlobalBounds())) {
-			auto fleche = (Fleche *)(it->second);
-			if (fleche->getDirection() == gauche)
+			auto item = (Item *)(it->second);
+			if (item->getDirection() == gauche)
 				_jauge->moveNiveau(-1);
-			else if (fleche->getDirection() == droite)
+			else if (item->getDirection() == droite)
 				_jauge->moveNiveau(1);
 			remove((it++)->first);
 		}
@@ -62,7 +62,7 @@ void GameObjectManager::collisionCycliste()
 	}
 }
 
-void GameObjectManager::supprFlechesHorsEcran()
+void GameObjectManager::supprItemsHorsEcran()
 {
 	for (auto it = _items.cbegin(); it != _items.cend();) {
 		if (it->second->getSprite().getGlobalBounds().top > 1000) {
@@ -78,22 +78,29 @@ void GameObjectManager::generateurItems() {
 	auto alea = rand() % 100;
 	if (alea > 75) {
 		auto route = alea % 5 + 1;
-		Fleche *fleche = new Fleche();
-		fleche->load("images/flecheG.png");
-		fleche->setRoute(route);
-		fleche->setDirection(gauche);
-		char *nomFleche = "";
-		add("FlecheG" + to_string(i), fleche);
+		Item *item = new Item();
+		item->load("images/flecheG.png");
+		item->setRoute(route);
+		item->setDirection(gauche);
+		add("FlecheG" + to_string(i), item);
 		i++;
 	}
 	else if (alea > 50) {
 		auto route = alea % 5 + 1;
-		Fleche *fleche = new Fleche();
-		fleche->load("images/flecheD.png");
-		fleche->setRoute(route);
-		fleche->setDirection(droite);
-		char *nomFleche = "";
-		add("FlecheD" + to_string(i), fleche);
+		Item *item = new Item();
+		item->load("images/flecheD.png");
+		item->setRoute(route);
+		item->setDirection(droite);
+		add("FlecheD" + to_string(i), item);
+		i++;
+	}
+	else if (alea > 25) {
+		auto route = alea % 5 + 1;
+		Item *item = new Item();
+		item->load("images/brique.png");
+		item->setRoute(route);
+		item->setDirection(mur);
+		add("Mur" + to_string(i), item);
 		i++;
 	}
 }
