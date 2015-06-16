@@ -8,7 +8,8 @@ class Game
 
 public:
 	static void Start();
-	const static GameObjectManager& getGameObjectManager() ;
+	static const GameObjectManager& getGameObjectManager() ;
+	static const int getDifficulte();
 
 private:
 	static bool IsExiting();
@@ -25,4 +26,5 @@ private:
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
 	static GameObjectManager _gameObjectManager;
+	static int difficulte;
 };

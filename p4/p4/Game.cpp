@@ -4,14 +4,24 @@
 #include "SplashScreen.h"
 #include <sstream>
 
-Clock chrono;
-Clock chrono2;
+Clock chronoFPS;
+Clock chronoClearItem;
+Clock chronoDifficulte;
+Clock chronoItem;
+Game::GameState Game::_gameState = Uninitialized;
+sf::RenderWindow Game::_mainWindow;
+GameObjectManager Game::_gameObjectManager;
+int Game::difficulte = 1;
 
 const GameObjectManager& Game::getGameObjectManager()
 {
 	return Game::_gameObjectManager;
 }
 
+
+const int Game::getDifficulte() {
+	return difficulte;
+}
 
 void Game::Start(void)
 {
@@ -20,7 +30,7 @@ void Game::Start(void)
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
+	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Super biker of the dead III: THE REVENGE part 2");
 	_mainWindow.setFramerateLimit(60);
 
 	Score *score = new Score();
@@ -28,7 +38,7 @@ void Game::Start(void)
 
 	Jauge *jauge = new Jauge(0,1);
 	jauge->load("images/jauge.png");
-	jauge->setPosition((1024 / 2) - 430, WINDOW_HEIGHT - 118);
+	jauge->setPosition((1024 / 2) - 405, WINDOW_HEIGHT - 93);
 	_gameObjectManager.setJauge(jauge);
 	
 	Cycliste *cycliste = new Cycliste();
@@ -83,20 +93,30 @@ void Game::GameLoop()
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
 
-		if (chrono.getElapsedTime().asMilliseconds() >= 50) {
-			chrono.restart();
+		if (chronoFPS.getElapsedTime().asMilliseconds() >= 50) {
+			chronoFPS.restart();
 
-			_gameObjectManager.getScore()->augmenterPoints(10);
+			_gameObjectManager.getScore()->augmenterPoints(1);
 
 			_gameObjectManager.getCycliste()->animation(88, 264, 88, 88);
-			_gameObjectManager.generateurItems();
 
 			_gameObjectManager.defilement();
 		}
 
-		if (chrono2.getElapsedTime().asMilliseconds() >= 5000) {
-			chrono2.restart();
+		if (chronoItem.getElapsedTime().asSeconds() >= 1) {
+			chronoItem.restart();
+			_gameObjectManager.generateurItems();
+		}
+
+		if (chronoClearItem.getElapsedTime().asMilliseconds() >= 5000) {
+			chronoClearItem.restart();
 			_gameObjectManager.supprItemsHorsEcran();
+		}
+
+		if (chronoDifficulte.getElapsedTime().asSeconds() >= 20) {
+			chronoDifficulte.restart();
+			if (difficulte != 4)
+				difficulte = difficulte + 1;
 		}
 
 		_gameObjectManager.collisionCycliste();
@@ -147,7 +167,3 @@ void Game::ShowMenu()
 		break;
 	}
 }
-
-Game::GameState Game::_gameState = Uninitialized;
-sf::RenderWindow Game::_mainWindow;
-GameObjectManager Game::_gameObjectManager;

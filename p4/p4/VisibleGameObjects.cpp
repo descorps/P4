@@ -19,6 +19,7 @@ void ObjetVisible::load(string nomFichier)
 	{
 		nomFichier = nomFichier;
 		sprite.setTexture(texture);
+		sprite.setOrigin(25, 25);
 		estCharge = true;
 	}
 }
@@ -125,19 +126,19 @@ void Item::setRoute(int numero) {
 		route = numero;
 		switch (numero) {
 		case 1:
-			setPosition(210, -50);
+			setPosition(240, -40);
 			break;
 		case 2:
-			setPosition(340, -50);
+			setPosition(365, -40);
 			break;
 		case 3:
-			setPosition(480, -50);
+			setPosition(505, -40);
 			break;
 		case 4:
-			setPosition(630, -50);
+			setPosition(655, -40);
 			break;
 		case 5:
-			setPosition(760, -50);
+			setPosition(782, -40);
 			break;
 		}
 	}
@@ -159,8 +160,7 @@ Direction Item::getDirection() const {
 
 /* Jauge */
 Jauge::Jauge(int niveau, int difficulte) :
-	niveau(niveau),
-	difficulte(difficulte)
+	niveau(niveau)
 {
 }
 
@@ -173,14 +173,14 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	RectangleShape rectangleRouge1(sf::Vector2f(80, 50));
 	rectangleRouge1.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 85);
 	rectangleRouge1.setFillColor(sf::Color(250, 0, 0));
-	rectangleRouge1.scale(float(difficulte), 1);
+	rectangleRouge1.scale(float(Game::getDifficulte()), 1);
 	window.draw(rectangleRouge1);
 
 	RectangleShape rectangleRouge2(sf::Vector2f(80, 50));
 	rectangleRouge2.setOrigin(80, 0);
 	rectangleRouge2.setPosition((1024 / 2) + 400, WINDOW_HEIGHT - 85);
 	rectangleRouge2.setFillColor(sf::Color(250, 0, 0));
-	rectangleRouge2.scale(float(difficulte), 1);
+	rectangleRouge2.scale(float(Game::getDifficulte()), 1);
 	window.draw(rectangleRouge2);
 
 	this->draw(window);

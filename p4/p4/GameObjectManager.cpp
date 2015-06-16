@@ -2,8 +2,6 @@
 #include "GameObjectManager.h"
 #include "Game.h"
 
-
-
 GameObjectManager::GameObjectManager()
 {
 }
@@ -108,22 +106,39 @@ void GameObjectManager::generateurItems() {
 void GameObjectManager::defilement() {
 	for (auto &item : _items) {
 		auto route = item.second->getRoute();
-		item.second->scale(1.005f, 1.005f);
-		switch (route) {
+		int vitesse = Game::getDifficulte() * 8;
+
+		switch (Game::getDifficulte()) {
 		case 1:
-			item.second->move(-0.75f, 8);
+			item.second->scale(1.0039f, 1.0039f);
 			break;
 		case 2:
-			item.second->move(-0.35f, 8);
+			item.second->scale(1.0041f, 1.0041f);
 			break;
 		case 3:
-			item.second->move(-0.08f, 8);
+			item.second->scale(1.006f, 1.006f);
 			break;
 		case 4:
-			item.second->move(0.05f, 8);
+			item.second->scale(1.008f, 1.008f);
+			break;
+		}
+
+
+		switch (route) {
+		case 1:
+			item.second->move(-0.60f*vitesse/8, vitesse);
+			break;
+		case 2:
+			item.second->move(-0.20f*vitesse / 8, vitesse);
+			break;
+		case 3:
+			item.second->move(0.07f*vitesse / 8, vitesse);
+			break;
+		case 4:
+			item.second->move(0.20f*vitesse / 8, vitesse);
 			break;
 		case 5:
-			item.second->move(0.45f, 8);
+			item.second->move(0.57f*vitesse / 8, vitesse);
 			break;
 		}
 	}

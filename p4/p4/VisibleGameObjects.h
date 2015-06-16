@@ -63,7 +63,6 @@ public:
 	int getNiveau() const;
 private:
 	int niveau;
-	int difficulte;
 };
 
 class Score : public ObjetVisible
