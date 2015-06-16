@@ -14,11 +14,11 @@ public:
 	void load(string filename);
 	void setPosition(float x, float y);
 	virtual void setRoute(int numero) {};
-	virtual int getRoute() { return 0; };
+	virtual int getRoute() const { return 0; };
 	virtual void moveRoute(Direction d) {};
 	void move(float x, float y);
 	void scale(float x, float y);
-	Sprite getSprite();
+	Sprite getSprite() const;
 private:
 protected:
 	Sprite sprite;
@@ -33,7 +33,7 @@ public:
 	Cycliste(int orientation = 0, int route = 3);
 	void animation(int tailleSprite, int top, int width, int height);
 	void setRoute(int numero) override;
-	int getRoute() override;
+	int getRoute() const override;
 	void moveRoute(Direction d) override;
 private:
 	int orientation;
@@ -45,7 +45,7 @@ class Item : public ObjetVisible
 {
 public :
 	void setRoute(int numero) override;
-	int getRoute() override;
+	int getRoute() const override;
 private:
 	int distance;
 	int route;
@@ -55,7 +55,7 @@ class Fleche : public Item
 {
 public:
 	Fleche(int distance = 0, Direction direction = gauche);
-	Direction getDirection();
+	Direction getDirection() const;
 	void setDirection(Direction direction);
 private:
 	int distance;
@@ -77,7 +77,7 @@ public:
 	Jauge(int niveau = 0, int difficulte = 1);
 	void remplirJauge(RenderWindow & window);
 	void moveNiveau(int niveau);
-	int getNiveau();
+	int getNiveau() const;
 private:
 	int niveau;
 	int difficulte;

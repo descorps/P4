@@ -30,7 +30,7 @@ void Game::Start(void)
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteM.png");
 	/* /!\ le sprite du cycliste doit faire 352 pixels */
-	cycliste->setPosition((WINDOW_WIDTH / 2) - 44, WINDOW_HEIGHT - 200);
+	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
 	_gameObjectManager.setCycliste(cycliste);
 
 	_gameState = Game::ShowingSplash;
