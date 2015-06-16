@@ -1,12 +1,14 @@
 #include "VisibleGameObjects.h"
 #include "stdafx.h"
+#include <sstream>
 
+
+/* Objet visible */
 ObjetVisible::ObjetVisible()
 {
 	estCharge = false;
 }
 
-/* Objet visible */
 void ObjetVisible::load(string nomFichier)
 {
 	if (texture.loadFromFile(nomFichier) == false)
@@ -37,7 +39,6 @@ void ObjetVisible::setPosition(float x, float y)
 	}
 }
 
-
 void ObjetVisible::move(float x, float y)
 {
 	if (estCharge)
@@ -55,6 +56,7 @@ void ObjetVisible::scale(float x, float y) {
 	if (estCharge)
 		sprite.scale(x, y);
 }
+
 
 /* Cycliste */
 Cycliste::Cycliste(int orientation, int route) :
@@ -96,7 +98,6 @@ int Cycliste::getRoute() {
 	return route;
 }
 
-
 void Cycliste::moveRoute(Direction d) { 
 	switch (d) {
 	case gauche:
@@ -112,7 +113,6 @@ void Cycliste::moveRoute(Direction d) {
 
 
 /* Items qui défilents */
-
 void Item::setRoute(int numero) {
 	if ((numero <= 5) && (numero >= 1)) {
 		route = numero;
@@ -140,9 +140,11 @@ int Item::getRoute() {
 	return route;
 }
 
+/* - Fleche */
 Direction Fleche::getDirection() {
 	return direction;
 }
+
 void Fleche::setDirection(Direction direction){
 	this->direction = direction;
 }
@@ -153,11 +155,13 @@ Fleche::Fleche(int distance, Direction direction) :
 {
 }
 
+/* - Obstacle */
 Obstacle::Obstacle(int distance, TypeObstacle type) :
 	distance(distance),
 	type(type)
 {
 }
+
 
 /* Jauge */
 Jauge::Jauge(int niveau, int tolerance) :
@@ -180,3 +184,34 @@ void Jauge::moveNiveau(int modifNiveau) {
 int Jauge::getNiveau() {
 	return niveau;
 }
+
+
+/* Score */
+Score::Score(int points) :
+	points(points)
+{
+};
+
+void Score::augmenterPoints(int montant) {
+	points += montant;
+}
+
+
+
+void Score::afficherScore(RenderWindow & window) {
+
+	std::ostringstream os;
+	os << points;
+
+	Font font;
+	font.loadFromFile("font/pixel.ttf");
+	Text text;
+	text.setPosition(10, 0);
+	text.setFont(font);
+	text.setString(os.str().c_str());
+	text.setColor(Color::Red);
+	text.setCharacterSize(32);
+	window.draw(text);
+
+}
+

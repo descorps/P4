@@ -82,3 +82,15 @@ private:
 	int niveau;
 	int tolerance;
 };
+
+class Score : public ObjetVisible
+{
+public:
+	Score(int points = 0);
+	void augmenterPoints(int montant);
+	void afficherScore(RenderWindow &window);
+private:
+	int points;
+	Font font;
+};
+

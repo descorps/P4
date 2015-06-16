@@ -112,3 +112,11 @@ Jauge* GameObjectManager::getJauge() {
 void GameObjectManager::setJauge(Jauge *jauge) {
 	_jauge = jauge;
 }
+
+Score* GameObjectManager::getScore() {
+	return _score;
+}
+
+void GameObjectManager::setScore(Score *score) {
+	_score = score;
+}
