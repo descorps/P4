@@ -189,3 +189,7 @@ void Game::ShowMenu()
 		break;
 	}
 }
+
+int Game::getDifficulte() {
+	return difficulte;
+}
