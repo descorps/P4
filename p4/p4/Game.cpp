@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "SplashScreen.h"
+#include <sstream>
 
 Clock chrono;
 Clock chrono2;
@@ -21,6 +22,9 @@ void Game::Start(void)
 
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
+
+	Score *score = new Score();
+	_gameObjectManager.setScore(score);
 
 	Jauge *jauge = new Jauge(0,1);
 	jauge->load("images/jauge.png");
@@ -52,6 +56,7 @@ bool Game::IsExiting()
 
 void Game::GameLoop()
 {
+
 	sf::Event currentEvent;
 	_mainWindow.pollEvent(currentEvent);
 
@@ -81,6 +86,8 @@ void Game::GameLoop()
 		if (chrono.getElapsedTime().asMilliseconds() >= 50) {
 			chrono.restart();
 
+			_gameObjectManager.getScore()->augmenterPoints(10);
+
 			_gameObjectManager.getCycliste()->animation(88, 264, 88, 88);
 			_gameObjectManager.generateurItems();
 
@@ -95,6 +102,9 @@ void Game::GameLoop()
 		_gameObjectManager.collisionCycliste();
 
 		_gameObjectManager.drawAll(_mainWindow);
+
+		_gameObjectManager.getScore()->afficherScore(_mainWindow);
+		
 		_mainWindow.display();
 
 		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
@@ -111,7 +121,6 @@ void Game::GameLoop()
 				_gameObjectManager.getCycliste()->moveRoute(droite);
 		}
 
-		
 		break;
 	}
 	}
