@@ -107,12 +107,29 @@ void GameObjectManager::generateurItems() {
 
 void GameObjectManager::defilement() {
 	for (auto &item : _items) {
-		item.second->move(0, 8);
+		auto route = item.second->getRoute();
 		item.second->scale(1.005f, 1.005f);
+		switch (route) {
+		case 1:
+			item.second->move(-0.75f, 8);
+			break;
+		case 2:
+			item.second->move(-0.35f, 8);
+			break;
+		case 3:
+			item.second->move(-0.08f, 8);
+			break;
+		case 4:
+			item.second->move(0.05f, 8);
+			break;
+		case 5:
+			item.second->move(0.45f, 8);
+			break;
+		}
 	}
 }
 
-Cycliste* GameObjectManager::getCycliste() {
+Cycliste* GameObjectManager::getCycliste() const {
 	return _cycliste;
 }
 
@@ -121,7 +138,7 @@ void GameObjectManager::setCycliste(Cycliste* cycliste) {
 }
 
 
-Jauge* GameObjectManager::getJauge() {
+Jauge* GameObjectManager::getJauge() const {
 	return _jauge;
 }
 

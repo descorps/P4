@@ -15,9 +15,9 @@ public:
 	void drawAll(sf::RenderWindow& renderWindow);
 	void generateurItems();
 	void defilement();
-	Cycliste* getCycliste();
+	Cycliste* getCycliste() const;
 	void setCycliste(Cycliste *cycliste);
-	Jauge* getJauge();
+	Jauge* getJauge() const;
 	void setJauge(Jauge *jauge);
 	Score* getScore();
 	void setScore(Score *score);

@@ -1,7 +1,6 @@
-#include "VisibleGameObjects.h"
 #include "stdafx.h"
+#include "Game.h"
 #include <sstream>
-
 
 /* Objet visible */
 ObjetVisible::ObjetVisible()
@@ -47,7 +46,7 @@ void ObjetVisible::move(float x, float y)
 		}
 }
 
-Sprite ObjetVisible::getSprite()
+Sprite ObjetVisible::getSprite() const
 {
 	return sprite;
 }
@@ -69,6 +68,8 @@ void Cycliste::animation(int tailleSprite, int top, int width, int height) {
 	static int compteurAnim = 0;
 	compteurAnim = (compteurAnim + 1) % 4;
 	sprite.setTextureRect(IntRect(compteurAnim*tailleSprite, top, width, height));
+	sprite.setOrigin(float(tailleSprite/2),  float(tailleSprite));
+	sprite.setRotation(float(5* Game::getGameObjectManager().getJauge()->getNiveau() ));
 }
 
 void Cycliste::setRoute(int numero) {
@@ -76,25 +77,25 @@ void Cycliste::setRoute(int numero) {
 		route = numero;
 		switch (numero) {
 		case 1:
-			setPosition(138.4f, sprite.getPosition().y);
+			setPosition(182.4f, sprite.getPosition().y);
 			break;
 		case 2:
-			setPosition(303.2f, sprite.getPosition().y);
+			setPosition(347.2f, sprite.getPosition().y);
 			break;
 		case 3:
-			setPosition(468, sprite.getPosition().y);
+			setPosition(512, sprite.getPosition().y);
 			break;
 		case 4:
-			setPosition(632.8f, sprite.getPosition().y);
+			setPosition(676.8f, sprite.getPosition().y);
 			break;
 		case 5:
-			setPosition(797.6f, sprite.getPosition().y);
+			setPosition(841.6f, sprite.getPosition().y);
 			break;
 		}
 	}
 }
 
-int Cycliste::getRoute() {
+int Cycliste::getRoute() const {
 	return route;
 }
 
@@ -124,33 +125,34 @@ void Item::setRoute(int numero) {
 		route = numero;
 		switch (numero) {
 		case 1:
-			setPosition(138.4f, sprite.getPosition().y);
+			setPosition(210, -50);
 			break;
 		case 2:
-			setPosition(303.2f, sprite.getPosition().y);
+			setPosition(340, -50);
 			break;
 		case 3:
-			setPosition(468, sprite.getPosition().y);
+			setPosition(480, -50);
 			break;
 		case 4:
-			setPosition(632.8f, sprite.getPosition().y);
+			setPosition(630, -50);
 			break;
 		case 5:
-			setPosition(797.6f, sprite.getPosition().y);
+			setPosition(760, -50);
 			break;
 		}
 	}
 }
 
-int Item::getRoute() {
+int Item::getRoute() const {
 	return route;
 }
+
 
 void Item::setDirection(Direction direction){
 	this->direction = direction;
 }
 
-Direction Item::getDirection() {
+Direction Item::getDirection() const {
 	return direction;
 }
 
@@ -193,7 +195,7 @@ void Jauge::moveNiveau(int modifNiveau) {
 	this->niveau += modifNiveau;
 }
 
-int Jauge::getNiveau() {
+int Jauge::getNiveau() const {
 	return niveau;
 }
 
