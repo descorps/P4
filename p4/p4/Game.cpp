@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "SplashScreen.h"
+#include "GameOverScreen.h"
 #include <sstream>
 
 Clock chronoFPS;
@@ -18,9 +19,22 @@ const GameObjectManager& Game::getGameObjectManager()
 	return Game::_gameObjectManager;
 }
 
+void Game::initialisation() {
+	_gameObjectManager.removeAll();
 
-const int Game::getDifficulte() {
-	return difficulte;
+	Score *score = new Score();
+	_gameObjectManager.setScore(score);
+
+	Jauge *jauge = new Jauge(0, 1);
+	jauge->load("images/jauge.png");
+	jauge->setPosition((1024 / 2) - 405, WINDOW_HEIGHT - 93);
+	_gameObjectManager.setJauge(jauge);
+
+	Cycliste *cycliste = new Cycliste();
+	cycliste->load("images/cyclisteM.png");
+	/* /!\ le sprite du cycliste doit faire 352 pixels */
+	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
+	_gameObjectManager.setCycliste(cycliste);
 }
 
 void Game::Start(void)
@@ -30,22 +44,11 @@ void Game::Start(void)
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Super biker of the dead III: THE REVENGE part 2");
+	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Super biker of the dead III : THE REVENGE part 2");
+
 	_mainWindow.setFramerateLimit(60);
 
-	Score *score = new Score();
-	_gameObjectManager.setScore(score);
-
-	Jauge *jauge = new Jauge(0,1);
-	jauge->load("images/jauge.png");
-	jauge->setPosition((1024 / 2) - 405, WINDOW_HEIGHT - 93);
-	_gameObjectManager.setJauge(jauge);
-	
-	Cycliste *cycliste = new Cycliste();
-	cycliste->load("images/cyclisteM.png");
-	/* /!\ le sprite du cycliste doit faire 352 pixels */
-	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
-	_gameObjectManager.setCycliste(cycliste);
+	initialisation();
 
 	_gameState = Game::ShowingSplash;
 	while (!IsExiting())
@@ -80,6 +83,12 @@ void Game::GameLoop()
 	case Game::ShowingSplash:
 	{
 		ShowSplashScreen();
+		break;
+	}
+	case Game::GameOver:
+	{
+		initialisation();
+		ShowGameOverScreen();
 		break;
 	}
 	case Game::Playing:
@@ -127,7 +136,8 @@ void Game::GameLoop()
 		
 		_mainWindow.display();
 
-		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+		if (currentEvent.type == sf::Event::Closed) 
+			_gameState = Game::Exiting;
 
 		if (currentEvent.type == sf::Event::KeyPressed)
 		{
@@ -151,6 +161,18 @@ void Game::ShowSplashScreen()
 	SplashScreen splashScreen;
 	splashScreen.Show(_mainWindow);
 	_gameState = Game::ShowingMenu;
+}
+
+void Game::ShowGameOverScreen()
+{
+	GameOverScreen gameOverScreen;
+	gameOverScreen.Show(_mainWindow);
+	_gameState = Game::ShowingMenu;
+}
+
+void Game::setGameState(GameState gamestate)
+{
+	_gameState = gamestate;
 }
 
 void Game::ShowMenu()

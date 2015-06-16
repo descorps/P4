@@ -8,6 +8,7 @@ public:
 
 	void add(std::string name, Item* item);
 	void remove(std::string name);
+	void removeAll();
 	int getObjectCount() const;
 	Item* get(std::string name) const;
 	void collisionCycliste();

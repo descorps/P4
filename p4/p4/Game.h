@@ -5,23 +5,24 @@
 
 class Game
 {
-
 public:
+	enum GameState {
+		Uninitialized, ShowingSplash, Paused,
+		ShowingMenu, Playing, Exiting, GameOver
+	};
 	static void Start();
-	static const GameObjectManager& getGameObjectManager() ;
-	static const int getDifficulte();
+
+	static const GameObjectManager& getGameObjectManager();
+	static void setGameState(GameState gamestate);
+	static void initialisation();
 
 private:
 	static bool IsExiting();
 	static void GameLoop();
 
 	static void ShowSplashScreen();
+	static void ShowGameOverScreen();
 	static void ShowMenu();
-
-	enum GameState {
-		Uninitialized, ShowingSplash, Paused,
-		ShowingMenu, Playing, Exiting
-	};
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;

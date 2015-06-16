@@ -189,6 +189,10 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	Curseur.setPosition((1024 / 2) - 5 + 50 * float(niveau), WINDOW_HEIGHT - 80);
 	Curseur.setFillColor(sf::Color(190,190,190));
 	window.draw(Curseur);
+
+	if ((1024 / 2) - 5 + 50 * niveau > ((1024 / 2) + 400 - 80)*difficulte
+		|| (1024 / 2) - 5 + 50 * niveau < ((1024 / 2) - 400 + 80)*difficulte)
+		Game::setGameState(Game::GameOver);
 }
 
 void Jauge::moveNiveau(int modifNiveau) {

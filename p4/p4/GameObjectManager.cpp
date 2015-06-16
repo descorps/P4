@@ -21,6 +21,12 @@ void GameObjectManager::remove(std::string name)
 	}
 }
 
+void GameObjectManager::removeAll()
+{
+	for (auto it = _items.cbegin(); it != _items.cend();)
+		remove((it++)->first);
+}
+
 Item* GameObjectManager::get(std::string name) const
 {
 	std::map<std::string, Item*>::const_iterator results = _items.find(name);
@@ -53,6 +59,8 @@ void GameObjectManager::collisionCycliste()
 				_jauge->moveNiveau(-1);
 			else if (item->getDirection() == droite)
 				_jauge->moveNiveau(1);
+			else if (item->getDirection() == mur)
+				Game::setGameState(Game::GameOver);
 			remove((it++)->first);
 		}
 		else
