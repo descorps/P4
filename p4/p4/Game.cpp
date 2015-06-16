@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "SplashScreen.h"
+#include "GameOverScreen.h"
 #include <sstream>
 
 Clock chrono;
@@ -12,6 +13,23 @@ const GameObjectManager& Game::getGameObjectManager()
 	return Game::_gameObjectManager;
 }
 
+void Game::initialisation() {
+	_gameObjectManager.removeAll();
+
+	Score *score = new Score();
+	_gameObjectManager.setScore(score);
+
+	Jauge *jauge = new Jauge(0, 1);
+	jauge->load("images/jauge.png");
+	jauge->setPosition((1024 / 2) - 430, WINDOW_HEIGHT - 118);
+	_gameObjectManager.setJauge(jauge);
+
+	Cycliste *cycliste = new Cycliste();
+	cycliste->load("images/cyclisteM.png");
+	/* /!\ le sprite du cycliste doit faire 352 pixels */
+	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
+	_gameObjectManager.setCycliste(cycliste);
+}
 
 void Game::Start(void)
 {
@@ -23,19 +41,7 @@ void Game::Start(void)
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
 
-	Score *score = new Score();
-	_gameObjectManager.setScore(score);
-
-	Jauge *jauge = new Jauge(0,1);
-	jauge->load("images/jauge.png");
-	jauge->setPosition((1024 / 2) - 430, WINDOW_HEIGHT - 118);
-	_gameObjectManager.setJauge(jauge);
-	
-	Cycliste *cycliste = new Cycliste();
-	cycliste->load("images/cyclisteM.png");
-	/* /!\ le sprite du cycliste doit faire 352 pixels */
-	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
-	_gameObjectManager.setCycliste(cycliste);
+	initialisation();
 
 	_gameState = Game::ShowingSplash;
 	while (!IsExiting())
@@ -70,6 +76,12 @@ void Game::GameLoop()
 	case Game::ShowingSplash:
 	{
 		ShowSplashScreen();
+		break;
+	}
+	case Game::GameOver:
+	{
+		initialisation();
+		ShowGameOverScreen();
 		break;
 	}
 	case Game::Playing:
@@ -107,7 +119,8 @@ void Game::GameLoop()
 		
 		_mainWindow.display();
 
-		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+		if (currentEvent.type == sf::Event::Closed) 
+			_gameState = Game::Exiting;
 
 		if (currentEvent.type == sf::Event::KeyPressed)
 		{
@@ -131,6 +144,18 @@ void Game::ShowSplashScreen()
 	SplashScreen splashScreen;
 	splashScreen.Show(_mainWindow);
 	_gameState = Game::ShowingMenu;
+}
+
+void Game::ShowGameOverScreen()
+{
+	GameOverScreen gameOverScreen;
+	gameOverScreen.Show(_mainWindow);
+	_gameState = Game::ShowingMenu;
+}
+
+void Game::setGameState(GameState gamestate)
+{
+	_gameState = gamestate;
 }
 
 void Game::ShowMenu()
