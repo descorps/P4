@@ -74,11 +74,11 @@ private:
 class Jauge : public ObjetVisible
 {
 public:
-	Jauge(int niveau = 0, int tolerance = 45);
+	Jauge(int niveau = 0, int difficulte = 1);
 	void remplirJauge(RenderWindow & window);
 	void moveNiveau(int niveau);
 	int getNiveau();
 private:
 	int niveau;
-	int tolerance;
+	int difficulte;
 };

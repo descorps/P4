@@ -4,6 +4,7 @@
 #include "SplashScreen.h"
 
 Clock chrono;
+Clock chrono2;
 
 const GameObjectManager& Game::getGameObjectManager()
 {
@@ -21,7 +22,7 @@ void Game::Start(void)
 	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Pang!");
 	_mainWindow.setFramerateLimit(60);
 
-	Jauge *jauge = new Jauge();
+	Jauge *jauge = new Jauge(0,1);
 	jauge->load("images/jauge.png");
 	jauge->setPosition((1024 / 2) - 407, WINDOW_HEIGHT - 100);
 	_gameObjectManager.setJauge(jauge);
@@ -77,18 +78,20 @@ void Game::GameLoop()
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
 
-
-		Jauge *jauge = new Jauge();
-		jauge->remplirJauge(_mainWindow);
-
 		if (chrono.getElapsedTime().asMilliseconds() >= 50) {
 			chrono.restart();
 
 			_gameObjectManager.getCycliste()->animation(88, 264, 88, 88);
-
 			_gameObjectManager.generateurItems();
+
 			_gameObjectManager.defilement();
 		}
+
+		if (chrono2.getElapsedTime().asMilliseconds() >= 5000) {
+			chrono2.restart();
+			_gameObjectManager.supprFlechesHorsEcran();
+		}
+
 		_gameObjectManager.collisionCycliste();
 
 		_gameObjectManager.drawAll(_mainWindow);

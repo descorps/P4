@@ -11,6 +11,7 @@ public:
 	int getObjectCount() const;
 	Item* get(std::string name) const;
 	void collisionCycliste();
+	void supprFlechesHorsEcran();
 	void drawAll(sf::RenderWindow& renderWindow);
 	void generateurItems();
 	void defilement();
