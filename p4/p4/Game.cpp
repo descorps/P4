@@ -3,6 +3,8 @@
 #include "MainMenu.h"
 #include "SplashScreen.h"
 #include "GameOverScreen.h"
+#include "SoundProvider.h"
+#include "ServiceLocator.h"
 #include <sstream>
 
 Clock chronoFPS;
@@ -14,12 +16,15 @@ sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;
 int Game::difficulte = 1;
 
+
 const GameObjectManager& Game::getGameObjectManager()
 {
 	return Game::_gameObjectManager;
 }
 
 void Game::initialisation() {
+
+
 	_gameObjectManager.removeAll();
 
 	Score *score = new Score();
@@ -39,6 +44,11 @@ void Game::initialisation() {
 
 void Game::Start(void)
 {
+	SoundProvider soundProvider;
+	ServiceLocator::registerServiceLocator(&soundProvider);
+	soundProvider.playSong("audio/botd.ogg", true);
+
+
 	srand((unsigned int)time(NULL));
 
 	if (_gameState != Uninitialized)
@@ -87,8 +97,8 @@ void Game::GameLoop()
 	}
 	case Game::GameOver:
 	{
-		initialisation();
 		ShowGameOverScreen();
+		initialisation();
 		break;
 	}
 	case Game::Playing:
@@ -132,7 +142,7 @@ void Game::GameLoop()
 
 		_gameObjectManager.drawAll(_mainWindow);
 
-		_gameObjectManager.getScore()->afficherScore(_mainWindow);
+		_gameObjectManager.getScore()->afficherScore(_mainWindow, 10, 0, 1);
 		
 		_mainWindow.display();
 

@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "GameObjectManager.h"
 #include "Game.h"
+#include "ServiceLocator.h"
+#include "SoundProvider.h"
+
 
 GameObjectManager::GameObjectManager()
 {
@@ -55,12 +58,15 @@ void GameObjectManager::collisionCycliste()
 	for (auto it = _items.cbegin(); it != _items.cend();) {
 		if (_cycliste->getSprite().getGlobalBounds().intersects(it->second->getSprite().getGlobalBounds())) {
 			auto item = (Item *)(it->second);
-			if (item->getDirection() == gauche)
+			if (item->getDirection() == gauche) {
 				_jauge->moveNiveau(-1);
-			else if (item->getDirection() == droite)
+			}
+			else if (item->getDirection() == droite) {
 				_jauge->moveNiveau(1);
-			else if (item->getDirection() == mur)
+			}
+			else if (item->getDirection() == mur) {
 				Game::setGameState(Game::GameOver);
+			}
 			remove((it++)->first);
 		}
 		else
@@ -170,7 +176,7 @@ void GameObjectManager::setJauge(Jauge *jauge) {
 	_jauge = jauge;
 }
 
-Score* GameObjectManager::getScore() {
+Score* GameObjectManager::getScore() const {
 	return _score;
 }
 

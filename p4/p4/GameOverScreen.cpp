@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameOverScreen.h"
-
+#include "Game.h"
 
 void GameOverScreen::Show(sf::RenderWindow & renderWindow)
 {
@@ -13,6 +13,8 @@ void GameOverScreen::Show(sf::RenderWindow & renderWindow)
 	sf::Sprite sprite(texture);
 
 	renderWindow.draw(sprite);
+	Game::getGameObjectManager().getScore()->afficherScore(renderWindow, WINDOW_WIDTH / 2 - 64, WINDOW_HEIGHT * 3 / 4, 2);
+
 	renderWindow.display();
 
 	sf::Event event;

@@ -70,7 +70,7 @@ class Score : public ObjetVisible
 public:
 	Score(int points = 0);
 	void augmenterPoints(int montant);
-	void afficherScore(RenderWindow &window);
+	void afficherScore(RenderWindow &window, int posX, int posY, int scale);
 private:
 	int points;
 	Font font;

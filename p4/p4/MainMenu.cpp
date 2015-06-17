@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MainMenu.h"
-
+#include "ServiceLocator.h"
 
 MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {

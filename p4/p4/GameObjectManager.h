@@ -20,7 +20,7 @@ public:
 	void setCycliste(Cycliste *cycliste);
 	Jauge* getJauge() const;
 	void setJauge(Jauge *jauge);
-	Score* getScore();
+	Score* getScore() const;
 	void setScore(Score *score);
 private:
 	std::map<std::string, Item*> _items;

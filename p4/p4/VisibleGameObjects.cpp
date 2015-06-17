@@ -216,15 +216,16 @@ void Score::augmenterPoints(int montant) {
 
 
 
-void Score::afficherScore(RenderWindow & window) {
+void Score::afficherScore(RenderWindow & window, int posX, int posY, int scale) {
 
 	std::ostringstream os;
 	os << points;
-
+	
 	Font font;
 	font.loadFromFile("font/pixel.ttf");
 	Text text;
-	text.setPosition(10, 0);
+	text.setPosition(posX, posY);
+	text.scale(scale, scale);
 	text.setFont(font);
 	text.setString(os.str().c_str());
 	text.setColor(Color::Red);
