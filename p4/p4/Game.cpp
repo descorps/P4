@@ -22,24 +22,33 @@ const GameObjectManager& Game::getGameObjectManager()
 	return Game::_gameObjectManager;
 }
 
+void Game::resetJauge() {
+	Jauge *jauge = new Jauge(0, 1);
+	jauge->load("images/jauge.png");
+	jauge->setPosition((1024 / 2) - 405, WINDOW_HEIGHT - 93);
+	_gameObjectManager.setJauge(jauge);
+}
+
 void Game::initialisation() {
-
-
 	_gameObjectManager.removeAll();
 
 	Score *score = new Score();
 	_gameObjectManager.setScore(score);
 
-	Jauge *jauge = new Jauge(0, 1);
-	jauge->load("images/jauge.png");
-	jauge->setPosition((1024 / 2) - 405, WINDOW_HEIGHT - 93);
-	_gameObjectManager.setJauge(jauge);
+	resetJauge();
 
 	Cycliste *cycliste = new Cycliste();
 	cycliste->load("images/cyclisteM.png");
 	/* /!\ le sprite du cycliste doit faire 352 pixels */
 	cycliste->setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 112);
 	_gameObjectManager.setCycliste(cycliste);
+
+	difficulte = 1;
+
+	chronoFPS.restart();
+	chronoClearItem.restart();
+	chronoDifficulte.restart();
+	chronoItem.restart();
 }
 
 void Game::Start(void)
@@ -112,7 +121,7 @@ void Game::GameLoop()
 		sf::Sprite sprite(texture);
 		_mainWindow.draw(sprite);
 
-		if (chronoFPS.getElapsedTime().asMilliseconds() >= 50) {
+		if (chronoFPS.getElapsedTime().asMilliseconds() >= 10) {
 			chronoFPS.restart();
 
 			_gameObjectManager.getScore()->augmenterPoints(1);
@@ -127,15 +136,17 @@ void Game::GameLoop()
 			_gameObjectManager.generateurItems();
 		}
 
-		if (chronoClearItem.getElapsedTime().asMilliseconds() >= 5000) {
+		if (chronoClearItem.getElapsedTime().asSeconds() >= 5) {
 			chronoClearItem.restart();
 			_gameObjectManager.supprItemsHorsEcran();
 		}
 
-		if (chronoDifficulte.getElapsedTime().asSeconds() >= 20) {
+		if (chronoDifficulte.getElapsedTime().asSeconds() >= 40) {
 			chronoDifficulte.restart();
-			if (difficulte != 4)
+			if (difficulte != 4) {
 				difficulte = difficulte + 1;
+				resetJauge();
+			}
 		}
 
 		_gameObjectManager.collisionCycliste();
