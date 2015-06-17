@@ -174,6 +174,8 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	rectangleRouge1.setPosition((1024 / 2) - 400, WINDOW_HEIGHT - 85);
 	rectangleRouge1.setFillColor(sf::Color(250, 0, 0));
 	rectangleRouge1.scale(float(Game::getDifficulte()), 1);
+	rectangleRouge1.setOutlineThickness(3);
+	rectangleRouge1.setOutlineColor(sf::Color(0, 0, 0));
 	window.draw(rectangleRouge1);
 
 	RectangleShape rectangleRouge2(sf::Vector2f(80, 50));
@@ -181,17 +183,22 @@ void Jauge::remplirJauge(RenderWindow & window) {
 	rectangleRouge2.setPosition((1024 / 2) + 400, WINDOW_HEIGHT - 85);
 	rectangleRouge2.setFillColor(sf::Color(250, 0, 0));
 	rectangleRouge2.scale(float(Game::getDifficulte()), 1);
+	rectangleRouge2.setOutlineThickness(3);
+	rectangleRouge2.setOutlineColor(sf::Color(0, 0, 0));
 	window.draw(rectangleRouge2);
 
 	this->draw(window);
 
 	RectangleShape Curseur(sf::Vector2f(10, 45));
 	Curseur.setPosition((1024 / 2) - 5 + 50 * float(niveau), WINDOW_HEIGHT - 80);
-	Curseur.setFillColor(sf::Color(190,190,190));
+	Curseur.setFillColor(sf::Color(255,255,255));
+	Curseur.setOutlineThickness(3);
+	Curseur.setOutlineColor(sf::Color(0,0,0));
 	window.draw(Curseur);
-
-	if ((1024 / 2) - 5 + 50 * niveau > ((1024 / 2) + 400 - 80)*Game::getDifficulte()
-		|| (1024 / 2) - 5 + 50 * niveau < ((1024 / 2) - 400 + 80)*Game::getDifficulte())
+	if ( 
+		Curseur.getGlobalBounds().intersects(rectangleRouge1.getGlobalBounds())
+		|| Curseur.getGlobalBounds().intersects(rectangleRouge2.getGlobalBounds()) 
+	)
 		Game::setGameState(Game::GameOver);
 }
 

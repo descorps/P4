@@ -80,34 +80,41 @@ void GameObjectManager::supprItemsHorsEcran()
 }
 
 void GameObjectManager::generateurItems() {
-	static int i = 1;
-	auto alea = rand() % 100;
-	if (alea > 75) {
-		auto route = alea % 5 + 1;
-		Item *item = new Item();
-		item->load("images/flecheG.png");
-		item->setRoute(route);
-		item->setDirection(gauche);
-		add("FlecheG" + to_string(i), item);
-		i++;
-	}
-	else if (alea > 50) {
-		auto route = alea % 5 + 1;
-		Item *item = new Item();
-		item->load("images/flecheD.png");
-		item->setRoute(route);
-		item->setDirection(droite);
-		add("FlecheD" + to_string(i), item);
-		i++;
-	}
-	else if (alea > 25) {
-		auto route = alea % 5 + 1;
-		Item *item = new Item();
-		item->load("images/brique.png");
-		item->setRoute(route);
-		item->setDirection(mur);
-		add("Mur" + to_string(i), item);
-		i++;
+	static int idItem = 1;
+	auto probaMur = Game::getDifficulte() * 5;
+	auto nbMurMax = Game::getDifficulte();
+	auto nbMur = 0;
+
+	for (int route = 1; route <= 5; route++) {
+		auto choixItem = rand() % 100;
+		if (choixItem < 20) {
+			Item *item = new Item();
+			item->load("images/flecheG.png");
+			item->setRoute(route);
+			item->setDirection(gauche);
+			add("FlecheG" + to_string(idItem), item);
+			idItem++;
+		}
+		else if (choixItem < 40) {
+			Item *item = new Item();
+			item->load("images/flecheD.png");
+			item->setRoute(route);
+			item->setDirection(droite);
+			add("FlecheD" + to_string(idItem), item);
+			idItem++;
+		}
+		else if (choixItem < 40 + probaMur && nbMur < nbMurMax) {
+			Item *item = new Item();
+			item->load("images/brique.png");
+			item->setRoute(route);
+			item->setDirection(mur);
+			add("Mur" + to_string(idItem), item);
+			nbMur++;
+			idItem++;
+		}
+		else if (choixItem < 100  ) {
+			//rien
+		}
 	}
 }
 

@@ -15,6 +15,7 @@ public:
 	static const GameObjectManager& getGameObjectManager();
 	static void setGameState(GameState gamestate);
 	static void initialisation();
+	static void resetJauge();
 	static int getDifficulte();
 
 private:
