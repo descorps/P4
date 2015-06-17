@@ -134,7 +134,7 @@ void Game::GameLoop()
 			_gameObjectManager.supprItemsHorsEcran();
 		}
 
-		if (chronoDifficulte.getElapsedTime().asSeconds() >= 20) {
+		if (chronoDifficulte.getElapsedTime().asSeconds() >= 40) {
 			chronoDifficulte.restart();
 			if (difficulte != 4) {
 				difficulte = difficulte + 1;
