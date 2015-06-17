@@ -127,7 +127,7 @@ void GameObjectManager::generateurItems() {
 void GameObjectManager::defilement() {
 	for (auto &item : _items) {
 		auto route = item.second->getRoute();
-		int vitesse = Game::getDifficulte() * 8;
+		auto vitesse = float(Game::getDifficulte() * 8);
 
 		switch (Game::getDifficulte()) {
 		case 1:
@@ -147,19 +147,19 @@ void GameObjectManager::defilement() {
 
 		switch (route) {
 		case 1:
-			item.second->move(-0.60f*vitesse/8, vitesse);
+			item.second->move(float(-0.60*vitesse/8), vitesse);
 			break;
 		case 2:
-			item.second->move(-0.20f*vitesse / 8, vitesse);
+			item.second->move(float(-0.20f*vitesse / 8), vitesse);
 			break;
 		case 3:
-			item.second->move(0.07f*vitesse / 8, vitesse);
+			item.second->move(float(0.07f*vitesse / 8), vitesse);
 			break;
 		case 4:
-			item.second->move(0.20f*vitesse / 8, vitesse);
+			item.second->move(float(0.20f*vitesse / 8), vitesse);
 			break;
 		case 5:
-			item.second->move(0.57f*vitesse / 8, vitesse);
+			item.second->move(float(0.57f*vitesse / 8), vitesse);
 			break;
 		}
 	}

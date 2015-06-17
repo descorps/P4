@@ -27,7 +27,7 @@ void SoundProvider::playSound(std::string filename)
 			_currentSounds[availChannel] = _soundFileCache.getSound(filename);
 			_currentSounds[availChannel].play();
 		}
-		catch (SoundNotFoundExeception& snfe)
+		catch (SoundNotFoundExeception snfe)
 		{
 			// ERROR, file wasnt found, should handle error here
 			// Currently, this will simply mean nothing happens if an error occurs

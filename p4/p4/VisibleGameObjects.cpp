@@ -231,8 +231,8 @@ void Score::afficherScore(RenderWindow & window, int posX, int posY, int scale) 
 	Font font;
 	font.loadFromFile("font/pixel.ttf");
 	Text text;
-	text.setPosition(posX, posY);
-	text.scale(scale, scale);
+	text.setPosition(float(posX), float(posY));
+	text.scale(float(scale), float(scale));
 	text.setFont(font);
 	text.setString(os.str().c_str());
 	text.setColor(Color::Red);

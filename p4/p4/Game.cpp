@@ -63,7 +63,7 @@ void Game::Start(void)
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Super biker of the dead III : THE REVENGE part 2");
+	_mainWindow.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Super biker of the dead beta");
 
 	_mainWindow.setFramerateLimit(60);
 
